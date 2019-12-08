@@ -426,10 +426,11 @@ void
 attachbelow(Client *c)
 {
 	Client *below = c->mon->clients;
-	for (; below && below->next; below = below->next);
-	if (below)
+	if (below) {
+		if (below->next)
+			c->next = below->next;
 		below->next = c;
-	else
+	} else
 		c->mon->clients = c;
 }
 
@@ -1486,11 +1487,10 @@ restack(Monitor *m)
 void
 rotatestack(const Arg *arg)
 {
-	Client *c = NULL, *f;
+	Client *c = NULL;
 
 	if (!selmon->sel)
 		return;
-	f = selmon->sel;
 	if (arg->i > 0) {
 		for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
 		if (c){

@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 8;        /* gaps between windows */
+static const unsigned int gappx     = 12;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -12,7 +12,6 @@ static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#333333";
 static const char col_gray2[]       = "#cccccc";
 static const char col_white[]       = "#eeeeee";
-static const char col_cyan[]        = "#4e82aa";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray2, col_black, col_gray1 },
@@ -20,7 +19,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -32,10 +31,11 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Vivaldi",  NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Telegram", NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.65; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 

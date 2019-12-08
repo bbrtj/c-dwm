@@ -8,15 +8,15 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Icons:size=13" };
 static const char dmenufont[]       = "Droid Sans Mono:size=11";
-static const char col_gray1[]       = "#000000";
-static const char col_gray2[]       = "#333333";
-static const char col_gray3[]       = "#cccccc";
-static const char col_gray4[]       = "#eeeeee";
+static const char col_black[]       = "#000000";
+static const char col_gray1[]       = "#333333";
+static const char col_gray2[]       = "#cccccc";
+static const char col_white[]       = "#eeeeee";
 static const char col_cyan[]        = "#4e82aa";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_gray2,  col_cyan  },
+	[SchemeNorm] = { col_gray2, col_black, col_gray1 },
+	[SchemeSel]  = { col_white, col_gray1, col_gray1  },
 };
 
 /* tagging */
@@ -37,7 +37,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -50,7 +50,7 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ ControlMask,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ ControlMask,                  KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_white, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update" };
 

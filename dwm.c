@@ -695,7 +695,6 @@ deck(Monitor *m) {
 
 	if(n > m->nmaster) {
 		mw = m->nmaster ? m->ww * m->mfact : 0;
-		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n - m->nmaster);
 	}
 	else
 		mw = m->ww;
@@ -707,6 +706,8 @@ deck(Monitor *m) {
 		}
 		else
 			resize(c, m->wx + mw, m->wy, m->ww - mw - (2*c->bw), m->wh - (2*c->bw), False);
+
+	focus(nexttiled(m->clients));
 }
 
 void
@@ -1496,8 +1497,6 @@ rotatestack(const Arg *arg)
 	}
 	if (c){
 		arrange(selmon);
-		//unfocus(f, 1);
-		focus(f);
 		restack(selmon);
 	}
 }

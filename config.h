@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 12;        /* gaps between windows */
+static const unsigned int gappx     = 13;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -19,7 +19,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -28,10 +28,14 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Vivaldi",  NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Firefox",  NULL,       NULL,       1,       0,           -1 },
+	{ "Vivaldi",  NULL,       NULL,       1,       0,           -1 },
 	{ "Telegram", NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Slack", NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "DBeaver", NULL,       NULL,       1 << 4,       0,           -1 },
+	{ "Postman", NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "YaST", NULL,       NULL,       1 << 6,       0,           -1 },
 };
 
 /* layout(s) */
@@ -61,7 +65,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_white, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "st", "-e", "tmux" };
 static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update" };
 
 static Key keys[] = {
@@ -97,6 +101,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_braceright,                      3)
 	TAGKEYS(                        XK_parenleft,                      4)
 	TAGKEYS(                        XK_equal,                      5)
+	TAGKEYS(                        XK_asterisk,                      6)
 	{ MODKEY|ShiftMask,             XK_F12,      quit,           {0} },
 };
 

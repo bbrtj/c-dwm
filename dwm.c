@@ -426,6 +426,7 @@ void
 attachbelow(Client *c)
 {
 	Client *master = c->mon->clients;
+	c->next = NULL;
 	if (master) {
 		Client *localmaster = nexttiled(master);
 		if (!localmaster)

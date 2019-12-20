@@ -1802,30 +1802,46 @@ tagmon(const Arg *arg)
 void
 tile(Monitor *m)
 {
-	unsigned int i, n, h, mw, my, ty, ns;
+	float area_coeff_x, area_coeff_y;
+	float single_tile_fact = m->mfact + 0.15;
+	unsigned int i, li, n,
+		mon_area_x, mon_area_y,
+		real_area_x, real_area_y,
+		offset_x, offset_y, last_border = 0;
+	unsigned int col_clients = m->nmaster > 1 ? m->nmaster : 1;
+	unsigned int max_clients = row_clients * col_clients;
 	Client *c;
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+
 	if (n == 0)
 		return;
-
-	if (n > m->nmaster) {
-		mw = m->nmaster ? m->ww * m->mfact : 0;
-		ns = m->nmaster > 0 ? 2 : 1;
-	} else {
-		mw = m->ww;
-		ns = 1;
+	else if (n == 1)
+		area_coeff_x = area_coeff_y = single_tile_fact;
+	else {
+		area_coeff_x = row_clients > 1 ? 1 / (float) row_clients : single_tile_fact;
+		area_coeff_y = col_clients > 1 ? 1 / (float) col_clients : (m->nmaster == 0 ? 1 : single_tile_fact);
 	}
-	for(i = 0, my = ty = gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - gappx;
-			resize(c, m->wx + gappx, m->wy + my, mw - (2*c->bw) - gappx*(5-ns)/2, h - (2*c->bw), False);
-			my += HEIGHT(c) + gappx;
-		} else {
-			h = (m->wh - ty) / (n - i) - gappx;
-			resize(c, m->wx + mw + gappx/ns, m->wy + ty, m->ww - mw - (2*c->bw) - gappx*(5-ns)/2, h - (2*c->bw), False);
-			ty += HEIGHT(c) + gappx;
-		}
+
+	mon_area_x = (m->ww - (MIN(n, row_clients) + 1) * gappx);
+	mon_area_y = (m->wh - (MIN(n + row_clients - (n % row_clients), max_clients) / row_clients + 1) * gappx);
+	real_area_x = (int) (mon_area_x * area_coeff_x);
+	real_area_y = (int) (mon_area_y * area_coeff_y);
+
+	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), ++i) {
+		li = i % max_clients;
+		// offsets for fully loaded layout
+		offset_x = m->wx + gappx + ((li % row_clients) * (real_area_x + gappx + 2 * last_border));
+		offset_y = m->wy + gappx + ((li / row_clients) * (real_area_y + gappx + 2 * last_border));
+		// additional offsets for centering
+		if (n % row_clients != 0 && i / row_clients == n / row_clients && i < max_clients)
+			offset_x += (mon_area_x - real_area_x * (n % row_clients)) / 2;
+		if (n <= max_clients - row_clients || max_clients == row_clients)
+			offset_y += (mon_area_y - real_area_y * ((MIN(n, max_clients) - 1) / row_clients + 1)) / 2;
+
+		resize(c, offset_x, offset_y, real_area_x - 2 * c->bw, real_area_y - 2 * c->bw, 0);
+		last_border = c->bw;
+	}
 }
 
 void

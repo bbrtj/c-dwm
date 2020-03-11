@@ -72,7 +72,7 @@ static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update"
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY|ControlMask,           XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Menu,   spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },

@@ -29,8 +29,6 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1,       0,           -1 },
 	{ "Vivaldi",  NULL,       NULL,       1,       0,           -1 },
 	{ "Telegram", NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Slack", NULL,       NULL,       1 << 1,       0,           -1 },
@@ -68,6 +66,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_white, NULL };
 static const char *termcmd[]  = { "st", "-e", "tmux" };
+static const char *rangercmd[]  = { "st", "-e", "ranger" };
 static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update" };
 
 static Key keys[] = {
@@ -115,6 +114,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkRootWin,           MODKEY,         Button1,        spawn,          {.v = rangercmd} },
 	{ ClkStatusText,        0,              Button1,        spawn,          {.v = pstatustimecmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },

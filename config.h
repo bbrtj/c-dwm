@@ -17,6 +17,7 @@ static const char col_white[]       = "#eeeeee";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray2, col_black, col_gray1 },
+	[SchemeTitle] = { col_gray2, col_black, col_gray1 },
 	[SchemeSel]  = { col_white, col_gray1, col_gray1  },
 };
 

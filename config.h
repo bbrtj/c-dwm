@@ -35,8 +35,6 @@ static const Rule rules[] = {
 	{ "Slack", NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "DBeaver", NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "Postman", NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "YaST", NULL,       NULL,       1 << 6,       0,           -1 },
 };
 
 /* layout(s) */

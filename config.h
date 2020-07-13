@@ -9,7 +9,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Icons:size=13" };
-static const char dmenufont[]       = "Droid Sans Mono:size=11";
+static const char dmenufont[]       = "DejaVu Sans Mono:size=11";
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#333333";
 static const char col_gray2[]       = "#cccccc";
@@ -37,7 +37,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.65; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -113,7 +113,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkRootWin,           MODKEY,         Button1,        spawn,          {.v = rangercmd} },
-	{ ClkStatusText,        0,              Button1,        spawn,          {.v = pstatustimecmd } },
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("pstatus --type time --update") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },

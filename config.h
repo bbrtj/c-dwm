@@ -8,8 +8,8 @@ static const unsigned int row_clients = 2;
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Icons:size=13" };
-static const char dmenufont[]       = "Droid Sans Mono:size=11";
+static const char *fonts[]          = { "Arial:size=10", "Icons:size=13" };
+static const char dmenufont[]       = "DejaVu Sans Mono:size=11";
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#333333";
 static const char col_gray2[]       = "#cccccc";
@@ -22,7 +22,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,7 +37,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.65; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -65,7 +65,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_white, NULL };
 static const char *termcmd[]  = { "st", "-e", "tmux" };
-static const char *rangercmd[]  = { "st", "-e", "ranger" };
 static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update" };
 
 static Key keys[] = {
@@ -104,6 +103,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_parenleft,                      4)
 	TAGKEYS(                        XK_equal,                      5)
 	TAGKEYS(                        XK_asterisk,                      6)
+	TAGKEYS(                        XK_slash,                      7)
+	TAGKEYS(                        XK_at,                      8)
 	{ MODKEY|ShiftMask,             XK_F12,      quit,           {0} },
 };
 
@@ -114,8 +115,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkRootWin,           MODKEY,         Button1,        spawn,          {.v = rangercmd} },
-	{ ClkStatusText,        0,              Button1,        spawn,          {.v = pstatustimecmd } },
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("pstatus --type time --update") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },

@@ -22,7 +22,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -65,7 +65,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_black, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_white, NULL };
 static const char *termcmd[]  = { "st", "-e", "tmux" };
-static const char *rangercmd[]  = { "st", "-e", "ranger" };
 static const char *pstatustimecmd[]  = { "pstatus", "--type", "time", "--update" };
 
 static Key keys[] = {
@@ -104,6 +103,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_parenleft,                      4)
 	TAGKEYS(                        XK_equal,                      5)
 	TAGKEYS(                        XK_asterisk,                      6)
+	TAGKEYS(                        XK_slash,                      7)
+	TAGKEYS(                        XK_at,                      8)
 	{ MODKEY|ShiftMask,             XK_F12,      quit,           {0} },
 };
 
@@ -114,7 +115,6 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkRootWin,           MODKEY,         Button1,        spawn,          {.v = rangercmd} },
 	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("pstatus --type time --update") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },

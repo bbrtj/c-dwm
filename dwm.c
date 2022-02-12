@@ -705,27 +705,39 @@ destroynotify(XEvent *e)
 void
 deck(Monitor *m)
 {
-	unsigned int i, n, h, mw, my, ns;
+	unsigned int i, // loopvar
+		n, // loopvar
+		h, // height
+		mw, // master width
+		my, // current distance from monitor top
+		has_space
+	;
+
 	Client *c;
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 	if (n == 0)
 		return;
 
-	if (n > m->nmaster) {
-		mw = m->nmaster ? m->ww * m->mfact : 0;
-		ns = m->nmaster > 0 ? 2 : 1;
+	// nmaster is really a number of windows on the right here
+	if (n > 1 && m->nmaster > 0) {
+		mw = m->ww * m->mfact;
+		has_space = 1;
 	} else {
 		mw = m->ww;
-		ns = 1;
+		has_space = 0;
 	}
-	for (i = 0, my = gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - gappx;
-			resize(c, m->wx + gappx, m->wy + my, mw - (2*c->bw) - gappx*(5-ns)/2, h - (2*c->bw), False);
+
+	for (i = 0, my = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		if (i == 0 || i > m->nmaster) {
+			resize(c, m->wx, m->wy, mw - (2*c->bw) - gappx * has_space, m->wh - (2*c->bw), False);
+		}
+		else {
+			h = (m->wh - my) / (MIN(n - 1, m->nmaster) - i + 1);
+			resize(c, m->wx + mw, m->wy + my, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
 			my += HEIGHT(c) + gappx;
-		} else
-			resize(c, m->wx + mw + gappx/ns, m->wy + gappx, m->ww - mw - (2*c->bw) - gappx*(5-ns)/2, m->wh - 2 * (c->bw + gappx), False);
+		}
+	}
 
 	focus(nexttiled(m->clients));
 }
@@ -2345,3 +2357,4 @@ main(int argc, char *argv[])
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
 }
+

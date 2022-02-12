@@ -30,10 +30,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Telegram", NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Slack", NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "DBeaver", NULL,       NULL,       1 << 4,       0,           -1 },
+	/* { "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 }, */
 };
 
 /* layout(s) */

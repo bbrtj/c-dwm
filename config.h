@@ -70,6 +70,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Menu,   spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ControlMask,           XK_b,      toggletopbar,   {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ AltMask,                      XK_Tab,    focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

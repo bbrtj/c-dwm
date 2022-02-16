@@ -1808,6 +1808,9 @@ tile(Monitor *m)
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 
+	if (n == 0)
+		return;
+
 	if (row_clients > n)
 		row_clients = n;
 
@@ -1815,9 +1818,7 @@ tile(Monitor *m)
 	if (n % row_clients != 0)
 		total_rows += 1;
 
-	if (n == 0)
-		return;
-	else if (n == 1)
+	if (n == 1)
 		area_coeff_x = area_coeff_y = single_tile_fact;
 	else {
 		area_coeff_x = 1 / (float) row_clients;

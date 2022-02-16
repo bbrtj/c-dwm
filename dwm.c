@@ -730,7 +730,7 @@ deck(Monitor *m)
 			resize(c, m->wx, m->wy, mw - (2*c->bw) - gappx * has_space, m->wh - (2*c->bw), False);
 		}
 		else {
-			h = (m->wh - my) / (MIN(n - 1, m->nmaster) - i + 1);
+			h = (m->wh - my) / (m->nmaster - i + 1);
 			resize(c, m->wx + mw, m->wy + my, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
 			my += HEIGHT(c) + gappx;
 		}

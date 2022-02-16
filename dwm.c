@@ -735,8 +735,6 @@ deck(Monitor *m)
 			my += HEIGHT(c) + gappx;
 		}
 	}
-
-	focus(nexttiled(m->clients));
 }
 
 void

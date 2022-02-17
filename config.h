@@ -11,17 +11,21 @@ static const char *fonts[]          = { "Arial:size=10", "Icons:size=13" };
 static const char dmenufont[]       = "DejaVu Sans Mono:size=11";
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#333333";
-static const char col_gray2[]       = "#cccccc";
+static const char col_gray2[]       = "#707070";
+static const char col_gray3[]       = "#cccccc";
 static const char col_white[]       = "#eeeeee";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray2, col_black, col_gray1 },
-	[SchemeTitle] = { col_gray2, col_black, col_gray1 },
+	[SchemeNorm] = { col_gray3, col_black, col_gray1 },
+	[SchemeTitle] = { col_gray3, col_black, col_gray1 },
+	[SchemeDimmed] = { col_gray2, col_black, col_gray1 },
 	[SchemeSel]  = { col_white, col_gray1, col_gray1  },
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char tagclients[] = "";
+static const char tagempty[] = "";
 
 static const Rule rules[] = {
 	/* xprop(1):

@@ -71,17 +71,17 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY,                       XK_k,      rotatestack,    {.i = -1 } },
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ AltMask,                      XK_Tab,    focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ AltMask,                      XK_F4,     killclient,     {0} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
@@ -101,6 +101,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_slash,                  7 )
 	TAGKEYS(                        XK_at,                     8 )
 	{ MODKEY|ShiftMask,             XK_F12,      quit,         {0} },
+
+	// some degree of compatibility with standard keybindings
+	{ AltMask,                      XK_Tab,    focusstack,     {.i = +1 } },
+	{ AltMask,                      XK_F4,     killclient,     {0} },
 };
 
 /* button definitions */

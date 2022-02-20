@@ -725,12 +725,17 @@ deck(Monitor *m)
 		has_space = 0;
 	}
 
-	for (i = 0, my = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
-		if (i == 0 || i > m->nmaster) {
+	unsigned int li;
+	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		if (i == 0 || !has_space) {
 			resize(c, m->wx, m->wy, mw - (2*c->bw) - gappx * has_space, m->wh - (2*c->bw), False);
 		}
 		else {
-			h = (m->wh - my) / (m->nmaster - i + 1);
+			li = (i - 1) % m->nmaster;
+			if (li == 0)
+				my = 0;
+
+			h = (m->wh - my) / (m->nmaster - li);
 			resize(c, m->wx + mw, m->wy + my, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
 			my += HEIGHT(c) + gappx;
 		}

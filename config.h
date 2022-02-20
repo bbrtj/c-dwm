@@ -23,7 +23,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", ""};
 static const char tagclients[] = "";
 static const char tagempty[] = "";
 
@@ -97,9 +97,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_braceright,             3 )
 	TAGKEYS(                        XK_parenleft,              4 )
 	TAGKEYS(                        XK_equal,                  5 )
-	TAGKEYS(                        XK_asterisk,               6 )
-	TAGKEYS(                        XK_slash,                  7 )
-	TAGKEYS(                        XK_at,                     8 )
+	TAGKEYS(                        XK_slash,                  6 )
+	TAGKEYS(                        XK_at,                     7 )
 	{ MODKEY|ShiftMask,             XK_F12,      quit,         {0} },
 
 	// some degree of compatibility with standard keybindings

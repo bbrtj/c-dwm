@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <X11/cursorfont.h>
@@ -144,6 +145,13 @@ typedef struct {
 	int monitor;
 } Rule;
 
+typedef struct Jail Jail;
+struct Jail {
+	time_t jailed_at;
+	Client *client;
+	Jail *next;
+};
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -212,6 +220,7 @@ static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
+static void forcehide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
@@ -241,6 +250,8 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void jail(const Arg *arg);
+static void unjail();
 
 /* variables */
 static const char broken[] = "broken";
@@ -274,6 +285,7 @@ static Clr **scheme;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
+static Jail *jails;
 static Window root, wmcheckwin;
 
 /* configuration, allows nested code to access above variables */
@@ -1512,9 +1524,12 @@ run(void)
 	XEvent ev;
 	/* main event loop */
 	XSync(dpy, False);
-	while (running && !XNextEvent(dpy, &ev))
+	while (running && !XNextEvent(dpy, &ev)) {
 		if (handler[ev.type])
 			handler[ev.type](&ev); /* call handler */
+
+		unjail();
+	}
 }
 
 void
@@ -1749,10 +1764,16 @@ showhide(Client *c)
 			resize(c, c->x, c->y, c->w, c->h, 0);
 		showhide(c->snext);
 	} else {
-		/* hide clients bottom up */
-		showhide(c->snext);
-		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+		forcehide(c);
 	}
+}
+
+void
+forcehide(Client *c)
+{
+	/* hide clients bottom up */
+	showhide(c->snext);
+	XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
 }
 
 void
@@ -2322,6 +2343,66 @@ zoom(const Arg *arg)
 		if (!c || !(c = nexttiled(c->next)))
 			return;
 	pop(c);
+}
+
+void
+jail(const Arg *arg)
+{
+	Client *c = selmon->sel;
+	if (!c)
+		return;
+
+	Jail *this_jail = ecalloc(1, sizeof(Jail));
+	this_jail->jailed_at = time(NULL);
+	this_jail->client = c;
+	this_jail->next = NULL;
+
+	if (!jails) {
+		jails = this_jail;
+	}
+	else {
+		Jail *last_jail = jails;
+		while (last_jail->next != NULL)
+			last_jail = last_jail->next;
+		last_jail->next = this_jail;
+	}
+
+	detach(c);
+	detachstack(c);
+	arrange(c->mon);
+	forcehide(c);
+	focus(NULL);
+}
+
+void
+unjail()
+{
+	Jail *this_jail = jails,
+		*last_jail = NULL;
+
+	time_t unjail_time = time(NULL) - jailtime;
+	while (this_jail != NULL) {
+		if (this_jail->jailed_at < unjail_time) {
+			attach(this_jail->client);
+			attachstack(this_jail->client);
+			arrange(this_jail->client->mon);
+
+			if (last_jail != NULL) {
+				last_jail->next = this_jail->next;
+			}
+			else {
+				jails = this_jail->next;
+			}
+
+			Jail *this_jail_cpy = this_jail;
+			this_jail = this_jail->next;
+			free(this_jail_cpy);
+		}
+		else {
+			last_jail = this_jail;
+			this_jail = this_jail->next;
+		}
+	}
 }
 
 int

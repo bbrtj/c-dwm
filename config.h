@@ -87,6 +87,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_a,      gesture,        {0} },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
@@ -121,5 +122,21 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+};
+
+/* gestures
+ * u means up
+ * d means down
+ * l means left
+ * r means right
+ * ud means up and down
+ */
+static const char *ovoplaypause[]  = { "ovoplayerctrl", "--playpause", NULL };
+static const char *ovonext[]  = { "ovoplayerctrl", "--next", NULL };
+static const char *ovoprev[]  = { "ovoplayerctrl", "--previous", NULL };
+static Gesture gestures[] = {
+	{ "u",  spawn, {.v = ovoplaypause} },
+	{ "dl",  spawn, {.v = ovoprev} },
+	{ "dr",  spawn, {.v = ovonext} },
 };
 

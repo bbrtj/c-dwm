@@ -38,7 +38,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	/* { "Thunderbird", NULL,       NULL,       1 << 2,       0,           -1 }, */
+	{ "OvoPlayer", NULL,       "MiniPlayer",       0,       1,           -1 },
 };
 
 /* layout(s) */

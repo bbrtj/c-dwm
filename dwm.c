@@ -216,6 +216,7 @@ static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
+static void picture(Monitor *m);
 static void motionnotify(XEvent *e);
 static void gesture(const Arg *arg);
 static void movemouse(const Arg *arg);
@@ -1356,6 +1357,24 @@ monocle(Monitor *m)
 
 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
 		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+}
+
+void
+picture(Monitor *m)
+{
+	Client *c;
+	unsigned int real_area_x, real_area_y;
+	float area_coeff = m->mfact + 0.25;
+
+	real_area_x = (int) (m->ww * area_coeff);
+	real_area_y = (int) (m->wh * area_coeff);
+
+	for (c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
+		resize(
+			c, (m->ww - real_area_x) / 2, (m->wh - real_area_y) / 2,
+			real_area_x - 2 * c->bw, real_area_y - 2 * c->bw, 0
+		);
+	}
 }
 
 void

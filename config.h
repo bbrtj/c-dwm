@@ -26,7 +26,7 @@ static const char *colors[][3]      = {
 	[SchemeNorm] = { col_activetext, col_inactivebackground, col_inactiveborder }, // unselected window, title bar
 	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
 	[SchemeDimmed] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
-	[SchemeSel]  = { col_activetext, col_activebackground, col_activeborder  }, // currently selected window
+	[SchemeSel]  = { col_activetext, col_activebackground, col_activeborder }, // currently selected window
 };
 
 /* tagging */
@@ -54,7 +54,8 @@ static const Layout layouts[] = {
 	{ "",      deck,    0 },
 	{ "",      tile,    0 },
 	{ "",      NULL,    0 },    /* no layout function means floating behavior */
-	{ "",      monocle, 1 },
+	{ "",      monocle, 0 },
+	{ "",      picture, 1 },
 };
 
 /* key definitions */
@@ -91,6 +92,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_a,      gesture,        {0} },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },

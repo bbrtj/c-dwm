@@ -2544,7 +2544,8 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
+		// reduce the height of the icon by 2 * spacing pixels, and draw it below top border of the tray
+		XMoveResizeWindow(dpy, i->win, i->x, systrayspacing, i->w, i->h - systrayspacing * 2);
 		w += i->w;
 		if (i->mon != m)
 			i->mon = m;

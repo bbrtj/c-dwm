@@ -42,6 +42,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "OvoPlayer", NULL,       "MiniPlayer",       0,       1,           -1 },
+	{ "feh",       NULL,       NULL,               0,       1,           -1 },
 };
 
 /* layout(s) */

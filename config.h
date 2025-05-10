@@ -12,23 +12,22 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Arial:size=10", "Icons:size=13" };
-static const char dmenufont[]       = "DejaVu Sans Mono:size=11";
-static const char col_black[]       = "#000000";
-static const char col_gray1[]       = "#333333";
-static const char col_gray2[]       = "#707070";
-static const char col_gray3[]       = "#cccccc";
-static const char col_white[]       = "#eeeeee";
-static const char col_unsel[]       = "#b16286";
-static const char coltest1[]       = "#d65d0e";
-static const char coltest2[]       = "#fb4934";
+static const char *fonts[]          = { "DejaVu Sans:size=10", "Icons:size=13" };
+
+// Gruvbox
+static const char col_activebackground[] = "#282828";
+static const char col_activeborder[] = "#1d2021";
+static const char col_inactivebackground[] = "#1d2021";
+static const char col_inactiveborder[] = "#98971a";
+static const char col_activetext[] = "#ebdbb2";
+static const char col_inactivetext[] = "#7c6f64";
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_black, col_unsel },
-	[SchemeTitle] = { col_gray3, col_black, coltest1 },
-	[SchemeDimmed] = { col_gray2, col_black, coltest2 },
-	[SchemeSel]  = { col_white, col_gray1, col_gray1  },
+	[SchemeNorm] = { col_activetext, col_inactivebackground, col_inactiveborder }, // unselected window, title bar
+	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
+	[SchemeDimmed] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
+	[SchemeSel]  = { col_activetext, col_activebackground, col_activeborder  }, // currently selected window
 };
 
 /* tagging */

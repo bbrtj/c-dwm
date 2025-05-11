@@ -1364,7 +1364,7 @@ picture(Monitor *m)
 {
 	Client *c;
 	unsigned int real_area_x, real_area_y;
-	float area_coeff = m->mfact + 0.25;
+	float area_coeff = MIN(1, m->mfact + 0.3);
 
 	real_area_x = (int) (m->ww * area_coeff);
 	real_area_y = (int) (m->wh * area_coeff);

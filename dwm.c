@@ -807,7 +807,7 @@ deck(Monitor *m)
 		n, // loopvar
 		h, // height
 		mw, // master width
-		my, // current distance from monitor top
+		my = 0, // current distance from monitor top
 		has_space
 	;
 

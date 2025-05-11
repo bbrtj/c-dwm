@@ -2078,11 +2078,10 @@ void
 tile(Monitor *m)
 {
 	float area_coeff_x, area_coeff_y;
-	float single_tile_fact = m->mfact + 0.15;
 	unsigned int i, n, total_rows,
 		mon_area_x, mon_area_y,
 		real_area_x, real_area_y,
-		offset_x, offset_y, last_border = 0;
+		offset_x, offset_y;
 	unsigned int row_clients = m->nmaster + 1;
 	Client *c;
 
@@ -2098,12 +2097,8 @@ tile(Monitor *m)
 	if (n % row_clients != 0)
 		total_rows += 1;
 
-	if (n == 1)
-		area_coeff_x = area_coeff_y = single_tile_fact;
-	else {
-		area_coeff_x = 1 / (float) row_clients;
-		area_coeff_y = 1 / (float) total_rows;
-	}
+	area_coeff_x = 1 / (float) row_clients;
+	area_coeff_y = 1 / (float) total_rows;
 
 	mon_area_x = (m->ww - (MIN(n, row_clients) - 1) * gappx);
 	mon_area_y = (m->wh - (total_rows - 1) * gappx);
@@ -2112,16 +2107,10 @@ tile(Monitor *m)
 
 	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), ++i) {
 		// offsets for fully loaded layout
-		offset_x = m->wx + ((i % row_clients) * (real_area_x + gappx + 2 * last_border));
-		offset_y = m->wy + ((i / row_clients) * (real_area_y + gappx + 2 * last_border));
-		// additional offsets for centering a single client
-		if (n == 1) {
-			offset_x += (mon_area_x - real_area_x) / 2;
-			offset_y += (mon_area_y - real_area_y) / 2;
-		}
+		offset_x = m->wx + ((i % row_clients) * (real_area_x + gappx));
+		offset_y = m->wy + ((i / row_clients) * (real_area_y + gappx));
 
 		resize(c, offset_x, offset_y, real_area_x - 2 * c->bw, real_area_y - 2 * c->bw, 0);
-		last_border = c->bw;
 	}
 }
 

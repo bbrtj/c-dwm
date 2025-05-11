@@ -822,8 +822,8 @@ deck(Monitor *m)
 		n, // loopvar
 		h, // height
 		mw, // master width
-		my = 0, // current distance from monitor top
-		has_space
+		sw = 0, // slave width
+		my = 0 // current distance from monitor top
 	;
 
 	Client *c;
@@ -834,17 +834,17 @@ deck(Monitor *m)
 
 	// nmaster is really a number of windows on the right here
 	if (n > 1 && m->nmaster > 0) {
-		mw = m->ww * m->mfact;
-		has_space = 1;
+		int tmp_ww = m->ww - gappx;
+		mw = tmp_ww * m->mfact;
+		sw = tmp_ww - mw;
 	} else {
 		mw = m->ww;
-		has_space = 0;
 	}
 
 	unsigned int li;
 	for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
-		if (i == 0 || !has_space) {
-			resize(c, m->wx, m->wy, mw - (2*c->bw) - gappx * has_space, m->wh - (2*c->bw), False);
+		if (i == 0 || !sw) {
+			resize(c, m->wx, m->wy, mw - (2*c->bw), m->wh - (2*c->bw), False);
 		}
 		else {
 			li = (i - 1) % m->nmaster;
@@ -852,7 +852,7 @@ deck(Monitor *m)
 				my = 0;
 
 			h = (m->wh - my) / (m->nmaster - li);
-			resize(c, m->wx + mw, m->wy + my, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+			resize(c, m->wx + mw + gappx, m->wy + my, sw - (2*c->bw) - (gappx % 2), h - (2*c->bw), False);
 			my += HEIGHT(c) + gappx;
 		}
 	}

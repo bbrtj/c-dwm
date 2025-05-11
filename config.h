@@ -20,15 +20,21 @@ static const char col_inactivebackground[] = "#1d2021";
 static const char col_inactiveborder[] = "#98971a";
 static const char col_activetext[] = "#ebdbb2";
 static const char col_inactivetext[] = "#7c6f64";
-static const char col_selectedtag[] = "#98971a";
+static const char col_selectedtag[] = "#458588";
+static const char col_success[] = "#98971a";
+static const char col_alert[] = "#d79921";
+static const char col_urgent[] = "#cc241d";
 
 // fg, bg, border
 static const char *colors[][3] = {
 	[SchemeNorm] = { col_activetext, col_inactivebackground, col_inactiveborder }, // unselected window, title bar
-	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
 	[SchemeSel] = { col_activetext, col_activebackground, col_activeborder }, // currently selected window
+	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
 	[SchemeTitleDim] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
 	[SchemeTitleSel] = { col_selectedtag, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
+	[SchemeTitleSuccess] = { col_alert, col_inactivebackground, col_inactiveborder }, // custom color for status bar
+	[SchemeTitleAlert] = { col_alert, col_inactivebackground, col_inactiveborder }, // custom color for status bar
+	[SchemeTitleUrgent] = { col_urgent, col_inactivebackground, col_inactiveborder }, // custom color for status bar
 };
 
 /* tagging */

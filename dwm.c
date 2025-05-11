@@ -951,7 +951,7 @@ drawbar(Monitor *m)
 	if ((w = m->ww - sw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[SchemeTitle]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2 + (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
+			drw_text(drw, x, 0, w, bh, lrpad / 2 + (m->sel->icon ? m->sel->icw + iconspacing : 0), m->sel->name, 0);
 			if (m->sel->icon) drw_pic(drw, x + lrpad / 2, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
@@ -1165,13 +1165,13 @@ geticonprop(Window win, unsigned int *picw, unsigned int *pich)
 		for (i = p; i < end - 1; i += sz) {
 			if ((w = *i++) >= 16384 || (h = *i++) >= 16384) { XFree(p); return None; }
 			if ((sz = w * h) > end - i) break;
-			if ((m = w > h ? w : h) >= ICONSIZE && (d = m - ICONSIZE) < bstd) { bstd = d; bstp = i; }
+			if ((m = w > h ? w : h) >= iconsize && (d = m - iconsize) < bstd) { bstd = d; bstp = i; }
 		}
 		if (!bstp) {
 			for (i = p; i < end - 1; i += sz) {
 				if ((w = *i++) >= 16384 || (h = *i++) >= 16384) { XFree(p); return None; }
 				if ((sz = w * h) > end - i) break;
-				if ((d = ICONSIZE - (w > h ? w : h)) < bstd) { bstd = d; bstp = i; }
+				if ((d = iconsize - (w > h ? w : h)) < bstd) { bstd = d; bstp = i; }
 			}
 		}
 		if (!bstp) { XFree(p); return None; }
@@ -1181,11 +1181,11 @@ geticonprop(Window win, unsigned int *picw, unsigned int *pich)
 
 	uint32_t icw, ich;
 	if (w <= h) {
-		ich = ICONSIZE; icw = w * ICONSIZE / h;
+		ich = iconsize; icw = w * iconsize / h;
 		if (icw == 0) icw = 1;
 	}
 	else {
-		icw = ICONSIZE; ich = h * ICONSIZE / w;
+		icw = iconsize; ich = h * iconsize / w;
 		if (ich == 0) ich = 1;
 	}
 	*picw = icw; *pich = ich;

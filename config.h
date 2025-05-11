@@ -9,10 +9,10 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray = 1;        /* 0 means no systray */
-static const int showbar = 1;        /* 0 means no bar */
-static const int topbar = 1;        /* 0 means bottom bar */
-#define ICONSIZE 16   /* icon size */
-#define ICONSPACING 5 /* space between icon and title */
+static const int showbar = 1;            /* 0 means no bar */
+static const int topbar = 1;             /* 0 means bottom bar */
+static const int iconsize = 14;          /* icon size */
+static const int iconspacing = 8;        /* space between icon and title */
 static const char *fonts[] = { "DejaVu Sans:size=10", "Icons:size=13" };
 
 // Gruvbox

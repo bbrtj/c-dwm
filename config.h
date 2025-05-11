@@ -20,13 +20,15 @@ static const char col_inactivebackground[] = "#1d2021";
 static const char col_inactiveborder[] = "#98971a";
 static const char col_activetext[] = "#ebdbb2";
 static const char col_inactivetext[] = "#7c6f64";
+static const char col_selectedtag[] = "#98971a";
 
 // fg, bg, border
 static const char *colors[][3] = {
 	[SchemeNorm] = { col_activetext, col_inactivebackground, col_inactiveborder }, // unselected window, title bar
 	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
-	[SchemeDimmed] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
 	[SchemeSel] = { col_activetext, col_activebackground, col_activeborder }, // currently selected window
+	[SchemeTitleDim] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
+	[SchemeTitleSel] = { col_selectedtag, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
 };
 
 /* tagging */
@@ -51,7 +53,7 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol   fn       hides topbar */
 	{ "",      deck,    0 },
-	{ "",      tile,    0 },
+	{ "",      tile,    0 },
 	{ "",      NULL,    0 }, /* no layout function means floating behavior */
 	{ "",      monocle, 0 },
 	{ "",      picture, 1 },

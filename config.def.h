@@ -13,7 +13,7 @@ static const int showbar = 1;            /* 0 means no bar */
 static const int topbar = 1;             /* 0 means bottom bar */
 static const int iconsize = 14;          /* icon size */
 static const int iconspacing = 8;        /* space between icon and title */
-static const char *fonts[] = { "DejaVu Sans:size=10", "Icons:size=13" };
+static const char *fonts[] = { "DejaVu Sans:size=10", "Icons:size=14" };
 
 // Gruvbox
 static const char col_activebackground[] = "#282828";

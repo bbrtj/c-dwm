@@ -23,9 +23,9 @@ static const char col_inactiveborder[] = "#98971a";
 static const char col_activetext[] = "#ebdbb2";
 static const char col_inactivetext[] = "#7c6f64";
 static const char col_selectedtag[] = "#458588";
-static const char col_success[] = "#98971a";
+static const char col_success[] = "#b8bb26";
 static const char col_alert[] = "#d79921";
-static const char col_urgent[] = "#cc241d";
+static const char col_urgent[] = "#fb4934";
 
 // fg, bg, border
 static const char *colors[][3] = {
@@ -34,7 +34,7 @@ static const char *colors[][3] = {
 	[SchemeTitle] = { col_activetext, col_inactivebackground, col_inactiveborder }, // title bar
 	[SchemeTitleDim] = { col_inactivetext, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
 	[SchemeTitleSel] = { col_selectedtag, col_inactivebackground, col_inactiveborder }, // non-active tags on the tagbar
-	[SchemeTitleSuccess] = { col_alert, col_inactivebackground, col_inactiveborder }, // custom color for status bar
+	[SchemeTitleSuccess] = { col_success, col_inactivebackground, col_inactiveborder }, // custom color for status bar
 	[SchemeTitleAlert] = { col_alert, col_inactivebackground, col_inactiveborder }, // custom color for status bar
 	[SchemeTitleUrgent] = { col_urgent, col_inactivebackground, col_inactiveborder }, // custom color for status bar
 };
@@ -79,7 +79,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
-static const char *pstatustimecmd[] = { "pstatus", "--type", "time", "--update", NULL };
+static const char *pstatustimecmd[] = { "pcrctl", "query", "Status", "build_time_line", "1", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

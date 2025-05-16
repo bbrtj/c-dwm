@@ -300,7 +300,7 @@ static void zoom(const Arg *arg);
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static char stext[256];
+static char stext[256], stext_with_colors[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
@@ -905,8 +905,8 @@ drawbar(Monitor *m)
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
-	char *ts = stext;
-	char *tp = stext;
+	char *ts = stext_with_colors;
+	char *tp = stext_with_colors;
 	int tx = 0;
 	char ctmp;
 	Client *c;
@@ -2562,8 +2562,20 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
-	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
-		strcpy(stext, "dwm-"VERSION);
+	if (!gettextprop(root, XA_WM_NAME, stext_with_colors, sizeof(stext)))
+		strcpy(stext_with_colors, "dwm-"VERSION);
+
+	char *ts = stext_with_colors;
+	char *tp = stext;
+	while (1) {
+		if (*ts == '\0') break;
+		if ((unsigned int)*ts <= LENGTH(colors)) { ts++; continue; }
+		*tp = *ts;
+		++tp;
+		++ts;
+	}
+	*tp = '\0';
+
 	drawbar(selmon);
 	updatesystray();
 }

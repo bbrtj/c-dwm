@@ -2675,8 +2675,8 @@ updatesystray(void)
 		w += systrayspacing;
 		i->x = w;
 		// reduce the height of the icon by 2 * spacing pixels, and draw it below top border of the tray
-		XMoveResizeWindow(dpy, i->win, i->x, systrayspacing, i->w, i->h - systrayspacing * 2);
-		w += i->w;
+		XMoveResizeWindow(dpy, i->win, i->x, systrayspacing, i->w - systrayspacing * 2, i->h - systrayspacing * 2);
+		w += i->w - systrayspacing * 2;
 		if (i->mon != m)
 			i->mon = m;
 	}

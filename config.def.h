@@ -48,15 +48,17 @@ static const char tagempty[] = "";
 // WM_CLASS(STRING) = instance, class
 // WM_NAME(STRING) = title
 static const Rule rules[] = {
-	/* class                 instance       title              tags mask   floating   monitor */
-	{ "OvoPlayer",           "ovoplayer",   NULL,              1 << 7,     0,         -1 },
-	{ "OvoPlayer",           NULL,          "MiniPlayer",      0,          1,         -1 },
-	{ "feh",                 NULL,          NULL,              0,          1,         -1 },
-	{ NULL,                  "Alert",       NULL,              0,          1,         -1 },
+	/* class                 instance       title              tags mask   floating   canfocus   monitor */
+
+	// important rules
+	{ "OvoPlayer",           NULL,          "MiniPlayer",      0,          1,         1,         -1 },
+	{ "feh",                 NULL,          NULL,              0,          1,         1,         -1 },
+	{ NULL,                  "Alert",       NULL,              0,          1,         0,         -1 },
 
 	// rules for organizing programs on tags on start / restore (optional)
-	{ "firefox",             "Navigator",   NULL,              1 << 0,     0,         -1 },
-	{ "thunderbird-default", "Mail",        NULL,              1 << 2,     0,         -1 },
+	{ "OvoPlayer",           "ovoplayer",   NULL,              1 << 7,     0,         1,         -1 },
+	{ "firefox",             "Navigator",   NULL,              1 << 0,     0,         1,         -1 },
+	{ "thunderbird-default", "Mail",        NULL,              1 << 2,     0,         1,         -1 },
 };
 
 /* layout(s) */

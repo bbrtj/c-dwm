@@ -48,9 +48,10 @@ static const char tagempty[] = "";
 // WM_CLASS(STRING) = instance, class
 // WM_NAME(STRING) = title
 static const Rule rules[] = {
-	/* class      instance    title       tags mask     isfloating   monitor */
+	/* class      instance    title                tags     mask         isfloating   monitor */
 	{ "OvoPlayer", NULL,       "MiniPlayer",       0,       1,           -1 },
 	{ "feh",       NULL,       NULL,               0,       1,           -1 },
+	{ NULL,        "Alert",    NULL,               0,       1,           -1 },
 };
 
 /* layout(s) */

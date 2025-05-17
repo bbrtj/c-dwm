@@ -1491,7 +1491,7 @@ motionnotify(XEvent *e)
 void
 gesture(const Arg *arg) {
 	int x, y, dx, dy, q;
-	int valid=0, listpos=0, gestpos=0, count=0;
+	int valid=0, listpos=0, gestpos=0, count=0, dragging=arg->i;
 	char move, currGest[10];
 	XEvent ev;
 
@@ -1508,8 +1508,13 @@ gesture(const Arg *arg) {
 			case MapRequest:
 				handler[ev.type](&ev);
 				break;
+			case ButtonPress:
+				dragging = 1;
+				x = ev.xmotion.x;
+				y = ev.xmotion.y;
+				break;
 			case MotionNotify:
-				if(count++ < 10)
+				if (!dragging || count++ < 10)
 					break;
 				count = 0;
 				dx = ev.xmotion.x - x;
@@ -1517,15 +1522,16 @@ gesture(const Arg *arg) {
 				x = ev.xmotion.x;
 				y = ev.xmotion.y;
 
-				if( abs(dx)/(abs(dy)+1) == 0 )
+				if (abs(dx)/(abs(dy)+1) == 0)
 					move = dy<0?'u':'d';
 				else
 					move = dx<0?'l':'r';
 
-				if(move!=currGest[gestpos-1])
+				if (move!=currGest[gestpos-1])
 				{
-					if(gestpos>9)
-					{	ev.type++;
+					if (gestpos>9)
+					{
+						ev.type++;
 						break;
 					}
 
@@ -1533,9 +1539,9 @@ gesture(const Arg *arg) {
 					currGest[++gestpos] = '\0';
 
 					valid = 0;
-					for(q = 0; q<LENGTH(gestures); q++)
+					for (q = 0; q<LENGTH(gestures); q++)
 					{
-						if(!strcmp(currGest, gestures[q].gname))
+						if (!strcmp(currGest, gestures[q].gname))
 						{
 							valid++;
 							listpos = q;

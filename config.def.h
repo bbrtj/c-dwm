@@ -56,9 +56,9 @@ static const Rule rules[] = {
 	{ NULL,                  "Alert",       NULL,              0,          1,         0,         -1 },
 
 	// rules for organizing programs on tags on start / restore (optional)
-	{ "OvoPlayer",           "ovoplayer",   NULL,              1 << 7,     0,         1,         -1 },
-	{ "firefox",             "Navigator",   NULL,              1 << 0,     0,         1,         -1 },
-	{ "thunderbird-default", "Mail",        NULL,              1 << 2,     0,         1,         -1 },
+	// { "firefox",             "Navigator",   NULL,              1 << 0,     0,         1,         -1 },
+	// { "thunderbird-default", "Mail",        NULL,              1 << 2,     0,         1,         -1 },
+	// { "OvoPlayer",           "ovoplayer",   NULL,              1 << 7,     0,         1,         -1 },
 };
 
 /* layout(s) */

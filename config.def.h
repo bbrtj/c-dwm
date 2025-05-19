@@ -10,7 +10,7 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray = 1;        /* 0 means no systray */
 static const int showbar = 1;            /* 0 means no bar */
-static const int topbar = 1;             /* 0 means bottom bar */
+static const int topbar = 0;             /* 0 means bottom bar */
 static const int iconsize = 14;          /* icon size */
 static const int iconspacing = 8;        /* space between icon and title */
 static const char *fonts[] = { "DejaVu Sans:size=10", "Icons:size=14" };
@@ -58,13 +58,12 @@ static const Rule rules[] = {
 	// rules for organizing programs on tags on start / restore (optional)
 	// { "firefox",             "Navigator",   NULL,              1 << 0,     0,         0,         -1 },
 	// { "thunderbird-default", "Mail",        NULL,              1 << 2,     0,         0,         -1 },
-	// { "OvoPlayer",           "ovoplayer",   NULL,              1 << 7,     0,         0,         -1 },
 };
 
 /* layout(s) */
 static const float mfact = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1; /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol   fn       hides topbar */

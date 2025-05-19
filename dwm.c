@@ -126,7 +126,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, canfocus, isurgent, neverfocus, oldstate, isfullscreen;
+	int isfixed, isfloating, cantfocus, isurgent, neverfocus, oldstate, isfullscreen;
 	unsigned int icw, ich; Picture icon;
 	Client *next;
 	Client *snext;
@@ -176,7 +176,7 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int isfloating;
-	int canfocus;
+	int cantfocus;
 	int monitor;
 } Rule;
 
@@ -361,7 +361,7 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->isfloating = 0;
-	c->canfocus = 1;
+	c->cantfocus = 0;
 	c->tags = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
@@ -374,7 +374,7 @@ applyrules(Client *c)
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
 			c->isfloating = r->isfloating;
-			c->canfocus = r->canfocus;
+			c->cantfocus = r->cantfocus;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -1037,8 +1037,8 @@ expose(XEvent *e)
 void
 focus(Client *c)
 {
-	if (!c || (!ISVISIBLE(c) || !c->canfocus))
-		for (c = selmon->stack; c && (!ISVISIBLE(c) || !c->canfocus); c = c->snext);
+	if (!c || (!ISVISIBLE(c) || c->cantfocus))
+		for (c = selmon->stack; c && (!ISVISIBLE(c) || c->cantfocus); c = c->snext);
 	if (selmon->sel && selmon->sel != c)
 		unfocus(selmon->sel, 0);
 	if (c) {
@@ -1091,16 +1091,16 @@ focusstack(const Arg *arg)
 	if (!selmon->sel)
 		return;
 	if (arg->i > 0) {
-		for (c = selmon->sel->next; c && (!ISVISIBLE(c) || !c->canfocus); c = c->next);
+		for (c = selmon->sel->next; c && (!ISVISIBLE(c) || c->cantfocus); c = c->next);
 		if (!c)
-			for (c = selmon->clients; c && (!ISVISIBLE(c) || !c->canfocus); c = c->next);
+			for (c = selmon->clients; c && (!ISVISIBLE(c) || c->cantfocus); c = c->next);
 	} else {
 		for (i = selmon->clients; i != selmon->sel; i = i->next)
-			if (ISVISIBLE(i) && i->canfocus)
+			if (ISVISIBLE(i) && !i->cantfocus)
 				c = i;
 		if (!c)
 			for (; i; i = i->next)
-				if (ISVISIBLE(i) && i->canfocus)
+				if (ISVISIBLE(i) && !i->cantfocus)
 					c = i;
 	}
 	if (c) {

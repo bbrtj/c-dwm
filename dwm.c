@@ -263,6 +263,7 @@ static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
+static void pcrctl(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
@@ -1493,9 +1494,10 @@ motionnotify(XEvent *e)
 
 void
 gesture(const Arg *arg) {
-	int x, y, dx, dy, q;
-	int valid=0, listpos=0, gestpos=0, count=0, dragging=arg->i;
-	char move, currGest[10];
+	int x, y, dx, dy;
+	int gestpos=0, count=0, dragging=arg->i;
+	const int max_gest_len = 4;
+	char move, curr_gest[max_gest_len + 1];
 	XEvent ev;
 
 	if (XGrabPointer(dpy, root, False, MOUSEMASK, GrabModeAsync, GrabModeAsync,
@@ -1525,38 +1527,29 @@ gesture(const Arg *arg) {
 				x = ev.xmotion.x;
 				y = ev.xmotion.y;
 
-				if (abs(dx)/(abs(dy)+1) == 0)
-					move = dy<0?'u':'d';
+				if (abs(dx) / (abs(dy) + 1) == 0)
+					move = dy < 0 ? 'u' : 'd';
 				else
-					move = dx<0?'l':'r';
+					move = dx < 0 ? 'l' : 'r';
 
-				if (move!=currGest[gestpos-1])
+				if (gestpos == 0 || move != curr_gest[gestpos - 1])
 				{
-					if (gestpos>9)
+					curr_gest[gestpos] = move;
+					curr_gest[++gestpos] = '\0';
+
+					if (gestpos == max_gest_len)
 					{
-						ev.type++;
+						ev.type = ButtonRelease;
 						break;
 					}
-
-					currGest[gestpos] = move;
-					currGest[++gestpos] = '\0';
-
-					valid = 0;
-					for (q = 0; q<LENGTH(gestures); q++)
-					{
-						if (!strcmp(currGest, gestures[q].gname))
-						{
-							valid++;
-							listpos = q;
-						}
-					}
 				}
-
 		}
 	} while(ev.type != ButtonRelease);
 
-	if(valid)
-		gestures[listpos].func(&(gestures[listpos].arg));
+	if (gestpos > 0) {
+		Arg pcrarg = {.v = (char*[]){"Control", "gestures", curr_gest}};
+		pcrctl(&pcrarg);
+	}
 
 	XUngrabPointer(dpy, CurrentTime);
 }
@@ -2163,6 +2156,15 @@ spawn(const Arg *arg)
 		perror(" failed");
 		exit(EXIT_SUCCESS);
 	}
+}
+
+void
+pcrctl(const Arg *arg)
+{
+	char **args = arg->v;
+	char *action[] = {"pcrctl", "query", args[0], args[1], args[2], NULL};
+	const Arg newarg = {.v = action};
+	spawn(&newarg);
 }
 
 void

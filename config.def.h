@@ -87,7 +87,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[] = { "st", NULL };
-static const char *pstatustimecmd[] = { "pcrctl", "query", "Status", "build_time_line", "1", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -138,7 +137,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        spawn,          {.v = pstatustimecmd } },
+	{ ClkStatusText,        0,              Button1,        pcrctl,         {.v = (char*[]){"Status", "build_time_line", "1"}} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
@@ -146,21 +145,5 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-};
-
-/* gestures
- * u means up
- * d means down
- * l means left
- * r means right
- * ud means up and down
- */
-static const char *ovoplaypause[] = { "ovoplayerctrl", "--playpause", NULL };
-static const char *ovonext[] = { "ovoplayerctrl", "--next", NULL };
-static const char *ovoprev[] = { "ovoplayerctrl", "--previous", NULL };
-static Gesture gestures[] = {
-	{ "u",  spawn, {.v = ovoplaypause} },
-	{ "dl",  spawn, {.v = ovoprev} },
-	{ "dr",  spawn, {.v = ovonext} },
 };
 

@@ -53,6 +53,7 @@ static const Rule rules[] = {
 	// important rules
 	{ "OvoPlayer",           NULL,          "MiniPlayer",      0,          1,         0,         -1 },
 	{ "feh",                 NULL,          NULL,              0,          1,         0,         -1 },
+	{ "Double Commander",    NULL,          NULL,              0,          1,         0,         -1 },
 	{ NULL,                  "Alert",       NULL,              0,          1,         1,         -1 },
 
 	// rules for organizing programs on tags on start / restore (optional)

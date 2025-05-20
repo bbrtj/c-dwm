@@ -236,6 +236,7 @@ static void picture(Monitor *m);
 static void motionnotify(XEvent *e);
 static void gesture(const Arg *arg);
 static void movemouse(const Arg *arg);
+static void movecenter(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
@@ -1610,6 +1611,24 @@ movemouse(const Arg *arg)
 		selmon = m;
 		focus(NULL);
 	}
+}
+
+void
+movecenter(const Arg *arg)
+{
+	Client *c = selmon->clients;
+	int found = 0;
+	for (; c; c = c->next) {
+		if (!ISVISIBLE(c) || !c->isfloating)
+			continue;
+
+		++found;
+		c->x = selmon->mx + (selmon->mw - WIDTH(c)) / 2;
+		c->y = selmon->my + (selmon->mh - HEIGHT(c)) / 2;
+	};
+
+	if (found)
+		arrange(selmon);
 }
 
 Client *

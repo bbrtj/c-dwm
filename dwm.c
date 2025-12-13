@@ -2182,7 +2182,7 @@ void
 pcrctl(const Arg *arg)
 {
 	char **args = arg->v;
-	char *action[] = {"pcrctl", args[0], args[1], args[2], NULL};
+	char *action[] = {"pcrctl_fast", args[0], args[1], args[2], NULL};
 	const Arg newarg = {.v = action};
 	spawn(&newarg);
 }
